@@ -52,8 +52,8 @@ def buckshot_roulette():
             type_shot = input('').lower()
 
             if type_shot == 'гг':
-                clear_console()
                 print("\nrestart.....\n\n\n\n")
+                clear_console()
                 break  # Выход из внутреннего цикла, чтобы начать новую игру
 
             if type_shot == 'х' and holost > 0:
@@ -80,6 +80,7 @@ def buckshot_roulette():
                 print('шанс боевого:', round((boevie / rounds) * 100), '%')
             else:
                 print("\nrestart.....\n\n\n\n")
+                clear_console()
 
 
 if __name__ == "__main__":
