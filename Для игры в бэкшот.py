@@ -1,6 +1,8 @@
-
 import os
 
+print("\nПеред началом введи количество патронов\n"
+      "Например: '5 1' (5 холостых, 1 боевой)\n"
+      "х - холостой, б - боевой, гг - рестарт.\n")
 
 def clear_console():
     """Очищает консоль."""
@@ -10,26 +12,25 @@ def clear_console():
 def get_ammo_input():
     """Получает от пользователя количество холостых и боевых патронов."""
     while True:
-        input_str = input("Введите количество холостых и боевых патронов (через пробел): ")
+        input_str = input("количество холостых и боевых: ")
         parts = input_str.split()
 
         if len(parts) != 2 or not all(part.isdigit() for part in parts):
-            print("Ошибка: Введите два целых числа через пробел.")
+            print("заново введи")
             continue
 
         holost, boevie = map(int, parts)
 
         if holost < 0 or boevie < 0:
-            print("Ошибка: Количество патронов не может быть отрицательным.")
+            print("заново введи")
             continue
 
         total_rounds = holost + boevie
         if total_rounds == 0:
-            print("Ошибка: Общее количество патронов не может быть равно нулю.")
+            print("заново введи")
             continue
 
-
-        print('Шанс боевого:', round((boevie / total_rounds) * 100), '%')
+        print('шанс боевого:', round((boevie / total_rounds) * 100), '%')
 
         return holost, boevie
 
@@ -40,41 +41,45 @@ def buckshot_roulette():
         holost, boevie = get_ammo_input()
         rounds = holost + boevie
         total_rounds = 0
+
         clear_console()
-        print(f"Холостых: {holost}, Боевых: {boevie}, Всего: {rounds}")
+        print("холостых:", holost,
+              "боевых:", boevie,
+              "всего:", rounds)
+
 
         while rounds > 0:
-            type_shot = input("Выберите тип выстрела ('х' - холостой, 'б' - боевой, 'r' - перезапуск): ").lower()
+            type_shot = input('').lower()
 
-            if type_shot == 'r':
+            if type_shot == 'гг':
                 clear_console()
-                print("\nПерезапуск игры...\n")
+                print("\nrestart.....\n\n\n\n")
                 break  # Выход из внутреннего цикла, чтобы начать новую игру
 
             if type_shot == 'х' and holost > 0:
                 holost -= 1
                 total_rounds += 1
-                shot_type = "холостой"
+                shot_type = "холостой ----"
             elif type_shot == 'б' and boevie > 0:
                 boevie -= 1
                 total_rounds += 1
-                shot_type = "боевой"
+                shot_type = "боевой   ----"
             else:
-                print("Некорректный ввод или недостаточно патронов данного типа.")
+                print('заново введи')
                 continue  # Возврат к началу цикла
 
             rounds = holost + boevie #update rounds value
 
-            print(f"Выстрел: {total_rounds}, {shot_type} ---- Холостых: {holost}, Боевых: {boevie}, Осталось: {rounds}")
+            print("выстрел:", total_rounds,
+                  shot_type,
+                  "холостых:", holost,
+                  "боевых:", boevie,
+                  "осталось:", rounds)
 
             if rounds > 0:
-                print('Шанс боевого:', round((boevie / rounds) * 100), '%')
+                print('шанс боевого:', round((boevie / rounds) * 100), '%')
             else:
-                print("game over")
-
-        if rounds == 0:
-            print("\nrestart....\n")
-            break  # Выход из внешнего цикла (завершение программы)
+                print("\nrestart.....\n\n\n\n")
 
 
 if __name__ == "__main__":
